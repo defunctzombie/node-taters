@@ -11,7 +11,7 @@ module.exports = function(opt, mware) {
     var tot = undefined;
 
     mware = mware || function(req, res, next) {
-        res.header('Cache-Control'. 'public, max-age=31536000');
+        res.header('Cache-Control', 'public, max-age=31536000');
         res.header('Vary', 'Accept-Encoding');
         next();
     };
