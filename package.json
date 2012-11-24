@@ -1,0 +1,14 @@
+{
+  "name": "taters",
+  "version": "0.0.0",
+  "description": "super hash powers for express view rendering",
+  "main": "index.js",
+  "dependencies": {
+    "dombie": "0.0.1",
+    "dombie-str": "0.0.0",
+    "dombie-walk": "0.0.0"
+  },
+  "repository": "",
+  "author": "Roman Shtylman <shtylman@gmail.com>",
+  "license": "MIT"
+}
