@@ -1,9 +1,10 @@
-# tater
+# taters
 
-tater is an automatic resource hashing layer for [express](http://expressjs.com/);
+taters is an automatic resource hashing middleware for [express](http://expressjs.com/);
 
 ```javascript
 var express = require('express');
+var taters = require('taters');
 
 var app = express();
 
@@ -11,7 +12,7 @@ app.set('view engine', 'jade'); // or hbs or whatevs
 
 // let tater setup the magic
 // you don't have to do anything else to get fingerprinting
-app.use(tater(app, { cache: true || false }, function(req, res, next) {
+app.use(taters(app, { cache: true || false }, function(req, res, next) {
 
     // req.url is now your regular url
     // you can set cache control and other response options here
