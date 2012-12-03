@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "dombie": "0.0.1",
-    "dombie-str": "0.0.0",
+    "dombie-str": "0.0.1",
     "dombie-walk": "0.0.0"
   },
   "repository": "",
