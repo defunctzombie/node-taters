@@ -1,11 +1,11 @@
 
 // vendor
-var dombie = require('dombie');
-var dombie_str = require('dombie-str');
+var htmltree = require('htmltree');
 
 // local
 var resource_hash = require('./lib/resource_hash');
 var fingerprint = require('./lib/fingerprint');
+var render = require('./lib/render');
 
 module.exports = function(opt, mware) {
     var tot = undefined;
@@ -54,17 +54,26 @@ var tater = function(req, opt) {
             }
 
             // this is where we do our transformations
-            dombie(str, function(err, dom) {
+            htmltree(str, function(err, doc) {
                 if (err) {
                     return orig_cb(err, str);
                 }
 
-                printer(dom, function(err) {
+                printer(doc.root, function(err) {
                     if (err) {
                         return orig_cb(err, str);
                     }
 
-                    dombie_str(dom, orig_cb);
+                    var stream = render(doc);
+
+                    var out = '';
+                    stream.on('data', function(chunk) {
+                        out += chunk;
+                    });
+
+                    stream.on('end', function() {
+                        orig_cb(null, out);
+                    });
                 });
             });
         };
