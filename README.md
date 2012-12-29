@@ -8,7 +8,8 @@ var taters = require('taters');
 
 var app = express();
 
-app.set('view engine', 'jade'); // or hbs or whatevs
+app.set('view engine', 'hbs'); // or jade or whatevs
+app.set('views', __dirname + '/views');
 
 // let tater setup the magic
 // you don't have to do anything else to get fingerprinting
