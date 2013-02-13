@@ -4,7 +4,7 @@
   "description": "super hash powers for express view rendering",
   "main": "index.js",
   "dependencies": {
-    "htmltree": "0.0.2"
+    "htmltree": "0.0.3"
   },
   "scripts": {
     "test": "mocha --ui qunit"
