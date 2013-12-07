@@ -5,10 +5,10 @@ taters is an automatic resource hashing middleware for [express](http://expressj
 ### before
 ```html
 <head>
-    <link href="/static/css/style.css">
+    <link href="/css/style.css">
 </head>
 <body>
-    <script src="/static/js/index.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 ```
 
@@ -21,6 +21,8 @@ taters is an automatic resource hashing middleware for [express](http://expressj
     <script src="/static/e9038a/js/index.js"></script>
 </body>
 ```
+
+And taters will add the appropriate cache expiry headers.
 
 ## quickstart
 
