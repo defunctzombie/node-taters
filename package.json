@@ -1,6 +1,6 @@
 {
   "name": "taters",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "super hash powers for express view rendering",
   "main": "index.js",
   "dependencies": {
