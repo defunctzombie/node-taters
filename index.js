@@ -37,9 +37,10 @@ module.exports = function(opt, mware) {
 var tater = function(req, opt) {
 
     var app = req.app;
+    opt = opt || {};
 
     // printer will do the actual fingerprinting of resources
-    var printer = fingerprint(resource_hash(req, opt));
+    var printer = fingerprint(opt, resource_hash(req, opt));
 
     var orig_render = app.render;
     app.render = function() {
