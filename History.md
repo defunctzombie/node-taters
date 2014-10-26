@@ -1,4 +1,4 @@
-## UNRELEASED
+# 0.2.0 (2014-10-26)
 
 * validate that our hash matches requested hash (404 otherwise)
 * html file no longer needs to be requested before resource
