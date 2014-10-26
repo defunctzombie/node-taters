@@ -1,12 +1,10 @@
-// builtin
 var assert = require('assert');
 var fs = require('fs');
+var after = require('after');
 
-// vendor
 var express = require('express');
 var request = require('request');
 
-// local
 var taters = require('../');
 
 var app = express();
@@ -61,6 +59,8 @@ test('/', function(done) {
 });
 
 test('should properly handle multiple inflight requests to same endpoint', function(done) {
+    done = after(2, done);
+
     request('http://localhost:' + port + '/static/0065ad/index.js', function(err, res, body) {
         assert.ifError(err);
         assert.equal(body, 'function foo() {}\n');
