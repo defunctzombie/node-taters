@@ -15,7 +15,7 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 app.use(taters({
-    prefix: '//cdn.example.com'
+    cache: true
 }));
 
 app.use(express.static(__dirname + '/public'));
@@ -30,27 +30,18 @@ test('init', function(done) {
     port = server.address().port;
 });
 
-// fetch html first to test loading from cold cache
-test('/', function(done) {
+test('should prime the cache', function(done) {
     request('http://localhost:' + port, function(err, res, body) {
         assert.ifError(err);
-        assert.equal(body, fs.readFileSync(__dirname + '/expected-cdn.html', 'utf8'));
+        assert.equal(body, fs.readFileSync(__dirname + '/expected.html', 'utf8'));
         done();
     });
 });
 
-test('/index.js', function(done) {
-    request('http://localhost:' + port + '/static/0065ad/index.js', function(err, res, body) {
+test('should use the cache', function(done) {
+    request('http://localhost:' + port, function(err, res, body) {
         assert.ifError(err);
-        assert.equal(body, 'function foo() {}\n');
-        done();
-    });
-});
-
-test('/style.css', function(done) {
-    request('http://localhost:' + port + '/static/746f7b/style.css', function(err, res, body) {
-        assert.ifError(err);
-        assert.equal(body, 'body {}\n');
+        assert.equal(body, fs.readFileSync(__dirname + '/expected.html', 'utf8'));
         done();
     });
 });

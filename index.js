@@ -1,9 +1,6 @@
-
-// vendor
 var htmltree = require('htmltree');
 
-// local
-var resource_hash = require('./lib/resource_hash');
+var ResourceHash = require('./lib/resource_hash');
 var fingerprint = require('./lib/fingerprint');
 var render = require('./lib/render');
 
@@ -16,31 +13,57 @@ module.exports = function(opt, mware) {
         next();
     };
 
+    var hashgen = ResourceHash(opt);
+
     return function(req, res, next) {
         if (!tot) {
-            tot = tater(req, opt);
+            // shim app.render
+            tot = tater(req, opt, hashgen);
         }
 
         // if not a taters url, skip
-        if (!req.url.match(/\/static\/[a-f0-9]+\/(.*)/)) {
+        if (!req.url.match(/\/static\/([a-f0-9]+)\/(.*)/)) {
             return next();
         }
 
-        // remove fingerprint from url for lookup in filesystem
-        var url = RegExp.$1;
-        req.url = '/' + RegExp.$1;
+        var exp_hash = RegExp.$1;
+        var url = '/' + RegExp.$2;
 
-        mware(req, res, next);
+        var addr = req.connection.address();
+        var req_opt = {
+            host: addr.address,
+            port: addr.port
+        };
+
+        hashgen.hash(url, req_opt, function(err, act_hash) {
+            if (err) {
+                return next(err);
+            }
+            else if (!act_hash) {
+                return res.status(404).end();
+            }
+            else if (act_hash != exp_hash) {
+                return res.status(404).end();
+            }
+
+            req.url = url;
+            mware(req, res, next);
+        });
     };
 };
 
-var tater = function(req, opt) {
-
+var tater = function(req, opt, hashgen) {
     var app = req.app;
     opt = opt || {};
 
+    var addr = req.connection.address();
+    var req_opt = {
+        host: addr.address,
+        port: addr.port
+    };
+
     // printer will do the actual fingerprinting of resources
-    var printer = fingerprint(opt, resource_hash(req, opt));
+    var printer = fingerprint(opt, hashgen.hash_maker(req_opt));
 
     var orig_render = app.render;
     app.render = function() {

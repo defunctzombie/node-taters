@@ -44,10 +44,32 @@ test('/style.css', function(done) {
     });
 });
 
+test('request for /index.js should 404 because we used an incorrect hash', function(done) {
+    request('http://localhost:' + port + '/static/000000/index.js', function(err, res, body) {
+        assert.ifError(err);
+        assert.equal(res.statusCode, 404);
+        done();
+    });
+});
+
 test('/', function(done) {
     request('http://localhost:' + port, function(err, res, body) {
         assert.ifError(err);
         assert.equal(body, fs.readFileSync(__dirname + '/expected.html', 'utf8'));
+        done();
+    });
+});
+
+test('should properly handle multiple inflight requests to same endpoint', function(done) {
+    request('http://localhost:' + port + '/static/0065ad/index.js', function(err, res, body) {
+        assert.ifError(err);
+        assert.equal(body, 'function foo() {}\n');
+        done();
+    });
+
+    request('http://localhost:' + port + '/static/0065ad/index.js', function(err, res, body) {
+        assert.ifError(err);
+        assert.equal(body, 'function foo() {}\n');
         done();
     });
 });
