@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "htmltree": "0.0.3",
-    "debug": "2.1.0"
+    "debug": "2.1.0",
+    "after": "0.8.1"
   },
   "scripts": {
     "test": "DEBUG=taters* mocha --ui qunit --reporter list"
