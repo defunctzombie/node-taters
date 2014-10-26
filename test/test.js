@@ -29,7 +29,7 @@ test('init', function(done) {
 });
 
 test('/index.js', function(done) {
-    request('http://localhost:' + port + '/index.js', function(err, res, body) {
+    request('http://localhost:' + port + '/static/0065ad/index.js', function(err, res, body) {
         assert.ifError(err);
         assert.equal(body, 'function foo() {}\n');
         done();
@@ -37,7 +37,7 @@ test('/index.js', function(done) {
 });
 
 test('/style.css', function(done) {
-    request('http://localhost:' + port + '/style.css', function(err, res, body) {
+    request('http://localhost:' + port + '/static/746f7b/style.css', function(err, res, body) {
         assert.ifError(err);
         assert.equal(body, 'body {}\n');
         done();
@@ -51,4 +51,3 @@ test('/', function(done) {
         done();
     });
 });
-
