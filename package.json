@@ -4,7 +4,7 @@
   "description": "super hash powers for express view rendering",
   "main": "index.js",
   "dependencies": {
-    "htmltree": "0.0.3",
+    "htmltree": "0.0.4",
     "debug": "2.1.0",
     "after": "0.8.1"
   },
