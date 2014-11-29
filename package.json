@@ -9,7 +9,7 @@
     "after": "0.8.1"
   },
   "scripts": {
-    "test": "DEBUG=taters* mocha --ui qunit --reporter list"
+    "test": "mocha --ui qunit --reporter list --bail --check-leaks"
   },
   "devDependencies": {
     "mocha": "2.0.1",

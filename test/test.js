@@ -7,23 +7,26 @@ var request = require('request');
 
 var taters = require('../');
 
-var app = express();
-
-app.set('view engine', 'hbs');
-app.set('views', __dirname + '/views');
-
-app.use(taters());
-
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function(req, res) {
-    res.render('index');
-});
+suite('taters');
 
 var port;
-test('init', function(done) {
-    var server = app.listen(done);
-    port = server.address().port;
+
+before(function(done) {
+    var app = express();
+    app.set('view engine', 'hbs');
+    app.set('views', __dirname + '/views');
+
+    taters(app);
+
+    app.use(express.static(__dirname + '/public'));
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+
+    var server = app.listen(function() {
+        port = server.address().port;
+        done();
+    });
 });
 
 test('/index.js', function(done) {

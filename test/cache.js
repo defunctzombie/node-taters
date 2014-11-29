@@ -1,33 +1,34 @@
-// builtin
 var assert = require('assert');
 var fs = require('fs');
-
-// vendor
 var express = require('express');
 var request = require('request');
 
-// local
 var taters = require('../');
 
-var app = express();
-
-app.set('view engine', 'hbs');
-app.set('views', __dirname + '/views');
-
-app.use(taters({
-    cache: true
-}));
-
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function(req, res) {
-    res.render('index');
-});
+suite('cache');
 
 var port;
-test('init', function(done) {
-    var server = app.listen(done);
-    port = server.address().port;
+before(function(done) {
+
+    var app = express();
+
+    app.set('view engine', 'hbs');
+    app.set('views', __dirname + '/views');
+
+    taters(app, {
+        cache: true
+    });
+
+    app.use(express.static(__dirname + '/public'));
+
+    app.get('/', function(req, res) {
+        res.render('index');
+    });
+
+    var server = app.listen(function() {
+        port = server.address().port;
+        done();
+    });
 });
 
 test('should prime the cache', function(done) {

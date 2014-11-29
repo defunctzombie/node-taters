@@ -35,9 +35,8 @@ var app = express();
 app.set('view engine', 'hbs'); // or jade or whatevs
 app.set('views', __dirname + '/views');
 
-// let tater setup the magic
-// you don't have to do anything else to get fingerprinting
-app.use(taters({ cache: true || false });
+// taters will setup itself on the app
+taters(app);
 
 // you can now serve static content with the regular static middleware
 // no need to set a longer cachetime or anything since taters does that for us
@@ -52,13 +51,7 @@ app.get('/', function(req, res, next) {
 
 ## api
 
-### taters(opt, [middleware])
-
-middleware is an optional function which will be called when /static/ middleware is encountered. You can do things like set longer expiries, better cache headers, etc...
-
-By default, taters middleware sets an expiry of 1 year. This lets browsers, proxies, and CDNs cache the resource for a long time since the hash changes when the resource changes.
-
-## options
+### taters(app, opt)
 
 Taters accepts some options to configure behavior
 
@@ -66,6 +59,13 @@ Taters accepts some options to configure behavior
 | ---- | ---- | ---- | ---- |
 | cache | Boolean | false | `true` will cache url hashes to be cached |
 | prefix | String |  | prefix all changed url with this path |
+| middleware| Function |  | optional function called wieh /static/ middleware is encountered |
+
+## Middleware
+
+`middleware` is an optional function which will be called when /static/ middleware is encountered. You can do things like set longer expiries, better cache headers, etc...
+
+By default, taters middleware sets an expiry of 1 year. This lets browsers, proxies, and CDNs cache the resource for a long time since the hash changes when the resource changes.
 
 ## CDN
 
