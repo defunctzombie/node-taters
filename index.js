@@ -81,7 +81,11 @@ Taters.prototype.engine = function(filename, render_opts, cb) {
         };
 
         // printer will do the actual fingerprinting of resources
-        var printer = fingerprint(opt, self.hashgen.hash_maker(req_opt));
+        var printer = fingerprint(opt, function(route, cb) {
+            self.hash(route, function(err, url_hash, hash) {
+                cb(err, url_hash);
+            });
+        });
 
         // this is where we do our transformations
         htmltree(html, function(err, doc) {
