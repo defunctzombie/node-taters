@@ -31,7 +31,12 @@ var Taters = function(app, opt) {
     var view_engine = app.get('view engine');
     debug('existing view engine %s', view_engine);
 
-    self.engine_fn = app.engines[view_engine];
+    var view_ext = view_engine;
+    if (view_ext[0] !== '.') {
+        view_ext = '.' + view_engine;
+    }
+
+    self.engine_fn = app.engines[view_ext];
     if (!self.engine_fn) {
         self.engine_fn = require(view_engine).__express;
     }

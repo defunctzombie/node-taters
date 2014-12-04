@@ -15,7 +15,8 @@
     "mocha": "2.0.1",
     "request": "2.46.0",
     "hbs": "2.7.0",
-    "express": "4.10.0"
+    "express": "4.10.0",
+    "supertest": "0.15.0"
   },
   "repository": "",
   "author": "Roman Shtylman <shtylman@gmail.com>",
