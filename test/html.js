@@ -10,7 +10,8 @@ var taters = require('../');
 
 suite('html');
 
-var app;
+var app = undefined;;
+var tot = undefined;
 
 before(function(done) {
     app = express();
@@ -18,7 +19,7 @@ before(function(done) {
     app.set('views', __dirname + '/views');
     app.engine('html', hbs.__express);
 
-    taters(app);
+    tot = taters(app);
 
     app.use(express.static(__dirname + '/public'));
     app.get('/', function(req, res) {
@@ -31,6 +32,23 @@ test('/', function(done) {
     request(app).get('/').end(function(err, res) {
         assert.ifError(err);
         assert.equal(res.text, fs.readFileSync(__dirname + '/index.html', 'utf8'));
+        done();
+    });
+});
+
+test('should support .hash function to hash a url', function(done) {
+    tot.hash('/index.js', function(err, hash_url, hash) {
+        assert.ifError(err);
+        assert.equal(hash_url, '/static/0065ad/index.js');
+        assert.equal(hash, '0065ad');
+        done();
+    });
+});
+
+test('should have no hash for 404 resources', function(done) {
+    tot.hash('/notfound.js', function(err, hash_url, hash) {
+        assert(err);
+        assert.equal(err.status, 404);
         done();
     });
 });

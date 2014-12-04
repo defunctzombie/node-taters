@@ -109,6 +109,27 @@ Taters.prototype.engine = function(filename, render_opts, cb) {
     });
 };
 
+Taters.prototype.hash = function(url, cb) {
+    var self = this;
+    var addr = self.address;
+
+    var req_opt = {
+        host: addr.address,
+        port: addr.port
+    };
+
+    self.hashgen.hash(url, req_opt, function(err, act_hash) {
+        if (err) {
+            return cb(err);
+        }
+        else if (!act_hash) {
+            return cb();
+        }
+
+        cb(null, '/static/' + act_hash + url, act_hash);
+    });
+};
+
 Taters.prototype.middleware = function(req, res, next) {
     var self = this;
     var addr = self.address;
@@ -125,19 +146,11 @@ Taters.prototype.middleware = function(req, res, next) {
     var exp_hash = match[1];
     var url = '/' + match[2];
 
-    var req_opt = {
-        host: addr.address,
-        port: addr.port
-    };
-
-    self.hashgen.hash(url, req_opt, function(err, act_hash) {
+    self.hash(url, function(err, hash_url, act_hash) {
         if (err) {
             return next(err);
         }
-        else if (!act_hash) {
-            return res.status(404).end();
-        }
-        else if (act_hash != exp_hash) {
+        else if (!act_hash || act_hash != exp_hash) {
             return res.status(404).end();
         }
 

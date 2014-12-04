@@ -1,5 +1,6 @@
 # UNRELEASED
 
+* add .hash function to hash resources
 * refactor taters to no longer money-patch app.render
 
 # 0.2.0 (2014-10-26)
