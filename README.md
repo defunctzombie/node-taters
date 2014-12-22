@@ -67,6 +67,11 @@ Taters accepts some options to configure behavior
 
 By default, taters middleware sets an expiry of 1 year. This lets browsers, proxies, and CDNs cache the resource for a long time since the hash changes when the resource changes.
 
+## Detecting Taters Requests
+
+You can detect incoming taters requests by checking if `req.internalTatersRequest` is true. This is helpful to bypass
+authentication and tweak logging.
+
 ## CDN
 
 Taters makes it very easy to use a CDN in production. Simply set the `prefix` option to the domain of your CDN and your resources will be served via CDN.

@@ -11,10 +11,22 @@ suite('taters');
 
 var port;
 
+var internalRequests = {};
+var externalRequests = {};
+
 before(function(done) {
     var app = express();
     app.set('view engine', 'hbs');
     app.set('views', __dirname + '/views');
+
+    app.use(function (req, res, next) {
+        var requestsMap = req.internalTatersRequest ? internalRequests : externalRequests;
+        if (!requestsMap[req.url]) {
+            requestsMap[req.url] = 0;
+        }
+        requestsMap[req.url]++;
+        next();
+    });
 
     taters(app);
 
@@ -75,4 +87,22 @@ test('should properly handle multiple inflight requests to same endpoint', funct
         assert.equal(body, 'function foo() {}\n');
         done();
     });
+});
+
+test('internalTatersRequest is truthy', function (done) {
+    assert.deepEqual(internalRequests, {
+        "/index.js": 5,
+        "/style.css": 2
+    });
+    done();
+});
+
+test('internalTatersRequest is falsey', function (done) {
+    assert.deepEqual(externalRequests, {
+        "/static/0065ad/index.js": 3,
+        "/static/746f7b/style.css": 1,
+        "/static/000000/index.js": 1,
+        "/": 1
+    });
+    done();
 });
