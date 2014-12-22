@@ -47,7 +47,10 @@ var Taters = function(app, opt) {
 
 Taters.prototype._init_server = function() {
     var self = this;
-    var server = http.createServer(self.app);
+    var server = http.createServer(function onTatersRequest(request, response) {
+        request.internalTatersRequest = true;
+        self.app(request, response)
+    });
     server.listen(0, '127.0.0.1', function(err) {
         if (err) {
             throw err;
