@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* add internalTatersRequest flag to requests made by taters
+
 # 1.0.0 (2014-12-04)
 
 * add .hash function to hash resources
