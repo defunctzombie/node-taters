@@ -1,4 +1,6 @@
-# taters [![Build Status](https://travis-ci.org/defunctzombie/node-taters.png?branch=master)](https://travis-ci.org/defunctzombie/node-taters)
+# taters
+
+[![Build Status](https://travis-ci.org/defunctzombie/node-taters.svg?branch=master)](https://travis-ci.org/defunctzombie/node-taters)
 
 taters is an automatic resource hashing middleware for [express](http://expressjs.com/). Injects resource fingerprints into static resource urls. Optionally inject a prefix for CDN deployments.
 
