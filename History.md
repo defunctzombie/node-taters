@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* add exclusion rule support
+
 # 1.1.0 (2014-12-22)
 
 * add internalTatersRequest flag to requests made by taters
