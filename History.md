@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.2.0 (2016-11-14)
 
 * add exclusion rule support
 
