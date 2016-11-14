@@ -60,6 +60,7 @@ Taters accepts some options to configure behavior
 | cache | Boolean | false | `true` will cache url hashes to be cached |
 | prefix | String |  | prefix all changed url with this path |
 | middleware| Function |  | optional function called wieh /static/ middleware is encountered |
+| exclude | Array | [] | Do not hash a url that contains `string` or if `regex` returns true
 
 ## Middleware
 

@@ -17,6 +17,7 @@ var Taters = function(app, opt) {
 
     self.app = app;
     self.address = undefined;
+    self.exclude = opt.exclude || [];
     self.hashgen = ResourceHash(opt);
 
     self.mware = opt.mware || function(req, res, next) {
